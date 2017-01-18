@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
+import Main.GamePanel;
+
 public class Background {
 	
 	private BufferedImage image;
@@ -27,8 +29,8 @@ public class Background {
 	}
 	
 	public void setPosition(double x, double y){
-		this.x = x;
-		this.y = y;
+		this.x = (x * moveScale) % GamePanel.WIDTH;
+		this.y = (y * moveScale) % GamePanel.HEIGHT;
 	}
 	
 	public void setVector(double dx, double dy){
@@ -44,9 +46,12 @@ public class Background {
 	public void draw(Graphics2D g){
 		g.drawImage(image, (int) x, (int) y, null);
 		
-		//STOP at 29:56 
-		//https://www.youtube.com/watch?v=9dzhgsVaiSo&list=PL-2t7SM0vDfcIedoMIghzzgQqZq45jYGv
+		if(x<0){
+			g.drawImage(image, (int)x + GamePanel.WIDTH, (int)y, null);	
+		}
+		if(x>0){
+			g.drawImage(image, (int)x - GamePanel.WIDTH, (int)y, null);	
+		}
 	}
-	
 	
 }
